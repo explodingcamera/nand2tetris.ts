@@ -61,9 +61,9 @@ CHIP ALU {
     And16(a=x2, b=y2, out=outand);
     Mux16(a=outand, b=outadd, sel=f, out=out1);
 
-    // handle no (negate out)
+    // handle no (negate out), output final value
     Not16(in=out1, out=notout1);
-    Mux16(a=out1, b=notout1, sel=no, out=out2);
+    Mux16(a=out1, b=notout1, sel=no, out=out2, out=out);
 
     // handle zr (out === 0)
     Or16Way(in=out2,  out=or);
@@ -71,7 +71,4 @@ CHIP ALU {
 
     // handle ng (out < 0)
     And16(a=out2, b[15]=true, out[15]=ng);
-
-    // just output out2
-    Mux16(a=out2, sel=false, out=out); 
 }

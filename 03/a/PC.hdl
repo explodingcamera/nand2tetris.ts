@@ -17,4 +17,21 @@ CHIP PC {
 
     PARTS:
     // Put your code here:
+
+    // we go through the comparison in reverse-order,
+    // so the last mux takes precedent and so on
+
+    // inc[t] == 1
+    Inc16(in=reg, out=inplus1);
+    Mux16(a=reg, b=inplus1, sel=inc, out=set0);
+
+    // load[t] == 1
+    Mux16(a=set0, b=in, sel=load, out=set1);
+    
+    // reset[t] == 1
+    Mux16(a=set1, b[0..15]=false, sel=reset, out=set);
+
+    // load can be always true since `set` will be set
+    // to `reg` if we don't want to update the register
+    Register(in=set, load=true, out=out, out=reg);
 }
