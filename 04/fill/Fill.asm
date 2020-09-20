@@ -12,3 +12,46 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+
+(LOOP)
+  @SCREEN
+  D=A
+  @i // iterate over each group of pixels
+  M=D
+
+  // jump to black if any key is pressed
+  @KBD
+  D=M
+  @BLACK
+  D;JGT
+
+  (WHITE)
+    @COLOR
+    M=0
+    @UPDATE
+    0;JMP
+
+  (BLACK)
+    @COLOR
+    M=-1
+    @UPDATE
+    0;JMP
+
+  (UPDATE)
+    @COLOR
+    D=M
+
+    @i
+    A=M // the current screen adress
+    M=D // fill the current screen address with @COLOR
+
+    @i
+    MD=M+1 // i++
+    @24575 // (position of the last screen pixel)
+    D=A-D
+
+    @UPDATE
+    D;JGE	// keep updating until the end is reached
+
+@LOOP
+0;JMP
