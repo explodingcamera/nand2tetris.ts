@@ -22,7 +22,9 @@ const main = async () => {
   const symbols = parseSymbols(operations);
   operations = insertSymbols(operations, symbols);
   const bytecode = generateBytecode(operations);
-  console.log(bytecode)
+  await fs.writeFile(path.resolve(process.cwd(), `${fileName}.hack`), bytecode, "utf8")
+
+  console.log(`Successfully written to ${fileName}.hack`)
 };
 
 main().catch((e) => console.error(e));
