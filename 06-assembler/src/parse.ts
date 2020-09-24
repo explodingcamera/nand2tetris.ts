@@ -35,20 +35,3 @@ export const parseSymbols = (operations: string[]): Symbols => {
     ...buildIns,
   };
 };
-
-// export const parseSymbols = (
-//   operations: string[]
-// ): Symbols => ({
-//   ...Object.fromEntries(
-//     [
-//       ...new Set(
-//         operations
-//           .filter((v) => !Object.keys(buildIns).some((b) => b === v.slice(1)))
-//           .filter((v) => v.startsWith("@"))
-//           .map((v) => v.slice(1))
-//           .filter((v) => Number.isNaN(parseInt(v)))
-//       ),
-//     ].map((o, i) => [o, i + 16])
-//   ),
-//   ...buildIns,
-// });
