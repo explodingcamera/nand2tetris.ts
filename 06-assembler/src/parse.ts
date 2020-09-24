@@ -1,5 +1,9 @@
 import buildIns from "./../data/buildIns.json";
 
+export interface Symbols {
+    [x: string]: number;
+}
+
 export const parseOperations = (file: string): string[] =>
   file
     .replace(/(\/\/).*|\)|[^\S\r\n]/g, "")
@@ -9,7 +13,7 @@ export const parseOperations = (file: string): string[] =>
 
 export const parseSymbols = (
   operations: string[]
-): { [x: string]: number } => ({
+): Symbols => ({
   ...Object.fromEntries(
     [
       ...new Set(

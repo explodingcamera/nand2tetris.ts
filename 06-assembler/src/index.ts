@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 
 import { parseOperations, parseSymbols } from "./parse";
-import { assemble } from "./assembler";
+import { insertSymbols, generateBytecode } from "./assembler";
 
 const main = async () => {
   const arg = process.argv.slice(2)[0];
@@ -18,14 +18,11 @@ const main = async () => {
 
   const file = await fs.readFile(path.resolve(process.cwd(), arg), "utf8");
 
-  const operations = parseOperations(file);
+  let operations = parseOperations(file);
   const symbols = parseSymbols(operations);
-
-  console.log(symbols);
-
-  const bytecode = assemble(operations, symbols);
-
-  // console.log(bytecode)
+  operations = insertSymbols(operations, symbols);
+  const bytecode = generateBytecode(operations);
+  console.log(bytecode)
 };
 
 main().catch((e) => console.error(e));
