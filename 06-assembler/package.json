@@ -1,0 +1,10 @@
+{
+  "name": "hack-assembler",
+  "version": "1.0.0",
+  "module": "src/index.js",
+  "dependencies": {
+    "@tsconfig/node12": "^1.0.7",
+    "@types/node": "^14.11.2",
+    "ts-node": "^9.0.0"
+  }
+}
