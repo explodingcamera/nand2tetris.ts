@@ -20,6 +20,8 @@ const main = async () => {
 
   let operations = parseOperations(file);
   const symbols = parseSymbols(operations);
+  // console.log(symbols);
+  
   operations = insertSymbols(operations, symbols);
   const bytecode = generateBytecode(operations);
   await fs.writeFile(path.resolve(process.cwd(), `${fileName}.hack`), bytecode, "utf8")
