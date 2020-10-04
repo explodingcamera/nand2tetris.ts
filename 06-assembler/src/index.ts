@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import ora from 'ora'
 
 import { parseOperations, parseSymbols } from "./parse";
 import { insertSymbols, generateBytecode } from "./assembler";
@@ -16,17 +17,30 @@ const main = async () => {
 
   let fileName = arg.replace(".asm", "");
 
+  const spinner = ora('loading file').start();
   const file = await fs.readFile(path.resolve(process.cwd(), arg), "utf8");
+  spinner.succeed()
 
+  spinner.start('extracting operations')
   let operations = parseOperations(file);
+  spinner.succeed()
+
+  spinner.start('parsing symbols')
   const symbols = parseSymbols(operations);
-  // console.log(symbols);
-  
+  spinner.succeed()
+
+  spinner.start('inserting symbols')
   operations = insertSymbols(operations, symbols);
+  spinner.succeed()
+
+  spinner.text = 'generating bytecode'
   const bytecode = generateBytecode(operations);
+
+  spinner.text = 'writing to file'
   await fs.writeFile(path.resolve(process.cwd(), `${fileName}.hack`), bytecode, "utf8")
 
-  console.log(`Successfully written to ${fileName}.hack`)
+  spinner.succeed(`writing new file to ${fileName}.hack`)
 };
+
 
 main().catch((e) => console.error(e));
