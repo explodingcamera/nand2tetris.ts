@@ -49,10 +49,12 @@ export const generateBytecode = (operations: string[]): string =>
         c = computation[rightSide];
         d = destination[leftSide];
 
-        // handle jumps
-      } else if (op.includes(";")) {
-        let [leftSide, rightSide] = op.split(";");
+      } else {
+        if (!op.includes(";")) throw new Error("invalid operation:" + op);
 
+        // handle jumps
+        let [leftSide, rightSide] = op.split(";");
+       
         if (!computation.hasOwnProperty(leftSide))
           throw new Error("invalid jump destination:" + op);
         if (!jump.hasOwnProperty(rightSide))
@@ -60,8 +62,6 @@ export const generateBytecode = (operations: string[]): string =>
 
         c = computation[leftSide];
         j = jump[rightSide];
-      } else {
-        throw new Error("invalid operation:" + op);
       }
 
       return `111${[c, d, j].join("")}`;

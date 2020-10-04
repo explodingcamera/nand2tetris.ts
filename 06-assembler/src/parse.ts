@@ -14,6 +14,7 @@ export const parseOperations = (file: string): string[] =>
 export const parseSymbols = (operations: string[]): Symbols => {
   const labels = operations.reduce<{ [x: string]: number }>(
     (prev, val, i) => ({
+      // only add labels
       ...(val.startsWith("(") && {
         [val.slice(1)]: i - Object.keys(prev).length,
       }),
@@ -23,11 +24,17 @@ export const parseSymbols = (operations: string[]): Symbols => {
   );
 
   let ops = operations
-    .filter((v) => !Object.keys(buildIns).some((b) => b === v.slice(1)))
+    // filter out only symbols
     .filter((v) => v.startsWith("@"))
     .map((v) => v.slice(1))
+
+    // filter out built-in symbols
+    .filter((v) => !Object.keys(buildIns).some((b) => b === v))
+
+    // filter out numbers
     .filter((v) => Number.isNaN(parseInt(v)))
-    .filter((v, i, a) => a.indexOf(v) === i)
+
+    // split operations into variables and labels
     .reduce(
       (result: string[][], v) => {
         result[labels.hasOwnProperty(v) ? 0 : 1].push(v);
@@ -35,9 +42,13 @@ export const parseSymbols = (operations: string[]): Symbols => {
       },
       [[], []]
     )
+
+    // calculate symbol values
     .map((x, isVar) =>
       x.map((o, i) => (isVar ? [o, i + 16] : [o, labels[o] || (() => {})()]))
     )
+
+    // merge variables and labels again
     .flat();
 
   return {
