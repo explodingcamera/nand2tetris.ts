@@ -5,6 +5,7 @@ import ora from 'ora'
 import { parseOperations, parseSymbols } from "./parse";
 import { insertSymbols, generateBytecode } from "./assembler";
 
+const spinner = ora("loading file").start();
 const main = async () => {
   const arg = process.argv.slice(2)[0];
 
@@ -17,9 +18,9 @@ const main = async () => {
 
   let fileName = arg.replace(".asm", "");
 
-  const spinner = ora('loading file').start();
+
   const file = await fs.readFile(path.resolve(process.cwd(), arg), "utf8");
-  spinner.succeed()
+  spinner.succeed();
 
   spinner.start('extracting operations')
   let operations = parseOperations(file);
@@ -43,4 +44,4 @@ const main = async () => {
 };
 
 
-main().catch((e) => console.error(e));
+main().catch((e: Error) => spinner.fail(e.message));

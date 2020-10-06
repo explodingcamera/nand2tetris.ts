@@ -6,9 +6,14 @@ export interface Symbols {
 
 export const parseOperations = (file: string): string[] =>
   file
+    // convert line-endings to dos-style for compatibility
+    .replace(/\r?\n/g, "\r\n")
+    // remove comments
     .replace(/(\/\/).*|\)|[^\S\r\n]/g, "")
+    // remove empty lines
     .replace(/^\s*\n/gm, "")
     .trim()
+    // split into seperate instructions
     .split("\r");
 
 export const parseSymbols = (operations: string[]): Symbols => {

@@ -19,7 +19,8 @@ export const insertSymbols = (
 
 export const generateBytecode = (operations: string[]): string =>
   operations
-    .filter((op) => !op.includes("(")) // strip labels from the final output
+    // strip labels from the final output
+    .filter((op) => !op.includes("("))
     .map((op) => {
       /**
        * A-Operations

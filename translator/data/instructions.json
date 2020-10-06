@@ -1,0 +1,27 @@
+{
+  "arithmatic": {
+    "neg": "M = -M",
+    "not": "M = !M",
+    "add": "M = D+M",
+    "sub": "M = M-D",
+    "and": "M = M-D",
+    "or": "M = D|M"
+  },
+  "jump": {
+    "eq": "JEQ",
+    "gt": "JGT",
+    "lt": "JLT"
+  },
+  "memory": {
+    "symbols": {
+      "local": "LCL",
+      "this": "THIS",
+      "that": "THAT",
+      "argument": "ARG"
+    },
+    "constants": {
+      "pointer": "3",
+      "temp": "5"
+    }
+  }
+}
