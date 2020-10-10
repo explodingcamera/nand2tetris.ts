@@ -1,18 +1,25 @@
 {
-  "arithmatic": {
-    "neg": "M = -M",
-    "not": "M = !M",
-    "add": "M = D+M",
-    "sub": "M = M-D",
-    "and": "M = M-D",
-    "or": "M = D|M"
+  "arithmetic": {
+    "pop": "@SP\nM=M-1\nA=M",
+    "commands": {
+      "not": "M=!M",
+      "neg": "M=-M",
+      "add": "M=D+M",
+      "sub": "M=M-D",
+      "and": "M=D&M",
+      "or": "M=D|M"  
+    }
   },
-  "jump": {
-    "eq": "JEQ",
-    "gt": "JGT",
-    "lt": "JLT"
+  "flow": {
+    "jump": {
+      "eq": "JEQ",
+      "gt": "JGT",
+      "lt": "JLT"
+    }
   },
   "memory": {
+    "push": "@SP\nA=M\nM=D\n@SP\nM=M+1",
+    "pop": "@SP\nM=M-1\nA=M\nD=M",
     "symbols": {
       "local": "LCL",
       "this": "THIS",
@@ -20,8 +27,8 @@
       "argument": "ARG"
     },
     "constants": {
-      "pointer": "3",
-      "temp": "5"
+      "pointer": 3,
+      "temp": 5
     }
   }
 }
