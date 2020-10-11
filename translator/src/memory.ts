@@ -1,7 +1,7 @@
 import data from "./../data/instructions.json";
 import { Command } from "./translate";
 
-const updateAddress = (
+export const updateAddress = (
   address: number | string,
   offset?: string
 ) => `@${address}
@@ -23,7 +23,7 @@ const getAddressPointer = () => `@R13
 A=M
 M=D`;
 
-export const push: Command = ({ segment, index, hash }) => {
+export const PUSH: Command = ({ segment, index, hash }) => {
   switch (segment) {
     case "constant":
       return `${updateAddress(index)}\n${data.memory.push}`;
@@ -45,7 +45,7 @@ export const push: Command = ({ segment, index, hash }) => {
   }
 };
 
-export const pop: Command = ({ segment, index, hash }) => {
+export const POP: Command = ({ segment, index, hash }) => {
   switch (segment) {
     case "temp":
       return `${getAddress(data.memory.constants.temp, index)}\n${

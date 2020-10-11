@@ -1,15 +1,30 @@
 import crypto from "crypto";
 import data from "./../data/instructions.json";
 
-// import * as flow from "./flow"
+import * as flow from "./flow"
 import * as memory from "./memory";
-// import * as arithmatic from "./arithmatic"
+import * as arithmetic from "./arithmetic"
 
 // type command = "push" | "pop"; //| "label" | "goto" | "if-goto" | "call" | "return" | "function"
 
 export enum Commands {
-  push = "push",
-  pop = "pop",
+  // memory
+  PUSH = "PUSH",
+  POP = "POP",
+
+  // arithmetic
+  NOT = "NOT",
+  NEG = "NEG",
+  ADD = "ADD",
+  SUB = "SUB",
+  AND = "AND",
+  OR = "OR",
+
+  // flow
+  IF = "IF",
+  RETURN = "RETURN",
+  LABEL = "LABEL",
+  FUNCTION = "FUNCTION" 
 }
 
 export const parseFile = (file: string) =>
@@ -46,10 +61,14 @@ export type Command = ({
   segment,
   index,
   hash,
+  currentLine,
+  findLastFunction,
 }: {
   segment: string,
   index: string,
   hash?: string,
+  currentLine: number,
+  findLastFunction: () => string
 }) => string
 
 export const parseLine = ({
@@ -65,14 +84,17 @@ export const parseLine = ({
 }) => {
   const instruction = line.split(" ");
 
-  const command = instruction[0] as Commands;
+  const command = instruction[0].replace("if-goto", "if").toLocaleUpperCase() as Commands
+  
   if (!Object.values(Commands).includes(command))
     throw new Error("invalid command: " + instruction[0]);
 
-  return { ...memory }[command]({
+  return { ...memory, ...arithmetic, ...flow }[command]({
     segment: instruction[1],
     index: instruction[2],
+    currentLine: index,
     hash,
+    findLastFunction: () => findLastFunction(index, lines)
   });
 };
 

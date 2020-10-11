@@ -7,7 +7,7 @@
       "add": "M=D+M",
       "sub": "M=M-D",
       "and": "M=D&M",
-      "or": "M=D|M"  
+      "or": "M=D|M"
     }
   },
   "flow": {
