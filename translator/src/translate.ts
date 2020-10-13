@@ -89,13 +89,15 @@ export const parseLine = ({
   if (!Object.values(Commands).includes(command))
     throw new Error("invalid command: " + instruction[0]);
 
-  return { ...memory, ...arithmetic, ...flow }[command]({
+  const asm = { ...memory, ...arithmetic, ...flow }[command]({
     segment: instruction[1],
     index: instruction[2],
     currentLine: index,
     hash,
     findLastFunction: () => findLastFunction(index, lines)
   });
+
+  return asm.split("\n").map(a=>a.padEnd(8, " ") + `// line ${index}, instruction: ${line}`).join("\n")
 };
 
 const bootstrap = `@256

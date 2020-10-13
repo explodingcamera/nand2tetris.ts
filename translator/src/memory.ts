@@ -5,12 +5,13 @@ export const updateAddress = (
   address: number | string,
   offset?: string
 ) => `@${address}
-${Number.isNaN(address) ? "D=M" : "D=A"}
-${
-  offset &&
-  `@${offset}
+${Number.isNaN(address) ? "D=M" : "D=A"}${
+  (offset &&
+    `
+@${offset}
 A=D+A
-D=M`
+D=M`) ||
+  ""
 }`;
 
 const getAddress = (address: number | string, offset: string) => `@R13
