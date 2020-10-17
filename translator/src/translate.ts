@@ -26,6 +26,8 @@ export enum Commands {
   RETURN = "RETURN",
   LABEL = "LABEL",
   FUNCTION = "FUNCTION",
+  GOTO = "GOTO",
+  CALL = "CALL",
 }
 
 export const parseFile = (file: string) => {
@@ -104,19 +106,19 @@ export const parseLine = ({
     findLastFunction: () => findLastFunction(index, lines),
   });
 
-  const generateComments = false;
+  const generateComments = true;
 
   if (generateComments)
     return asm
       .split("\n")
-      .map((a) => a.padEnd(8, " ") + `// line ${index}, instruction: ${line}`)
+      .map((a) => a.padEnd(8, " ") + ` // line ${index}, instruction: ${line}`)
       .join("\n");
 
   return asm;
 };
 
-const bootstrap = ({ hash }: { hash: string }) => `@256
+export const bootstrap = () => `@256
 D=A
 @SP
 M=D
-${flow.CALL({ segment: "Sys.init", index: "0", currentLine: 0, hash })}`;
+${flow.CALL({ segment: "Sys.init", index: "0", currentLine: 0 })}`;
