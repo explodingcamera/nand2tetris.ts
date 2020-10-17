@@ -53,7 +53,7 @@ type jumpProps = {
 };
 
 const compare = ({ command, currentLine, hash }: jumpProps) => `D=M-D
-@${hash}$${currentLine}$TRUE
+@${hash}$${currentLine}$JMP$TRUE
 D;${data.flow.jump[command]}
 D=0
 @${hash}$${currentLine}$JMP$THEN

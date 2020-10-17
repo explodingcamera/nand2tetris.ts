@@ -1,7 +1,7 @@
 {
   "arithmetic": {
     "commands": {
-      "not": "D=!M",
+      "not": "D=!D",
       "neg": "D=-M",
       "add": "D=D+M",
       "sub": "D=M-D",

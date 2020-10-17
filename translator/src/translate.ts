@@ -17,6 +17,9 @@ export enum Commands {
   SUB = "SUB",
   AND = "AND",
   OR = "OR",
+  EQ = "EQ",
+  LT = "LT",
+  GT = "GT",
 
   // flow
   IF = "IF",

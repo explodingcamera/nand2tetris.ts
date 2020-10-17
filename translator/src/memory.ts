@@ -38,7 +38,7 @@ export const PUSH: Command = ({ segment, index, hash }) => {
         data.memory.push
       }`;
     case "static":
-      return `${updateAddress(`${hash}.${index}`)}\n${data.memory.push}`;
+      return `${updateAddress(`STATIC$${hash}.${index}`)}\n${data.memory.push}`;
     default:
       if (data.memory.symbols.hasOwnProperty(segment))
         return `${updateAddress((data.memory.symbols as any)[segment], index)}\n${data.memory.push}`;
@@ -56,7 +56,7 @@ export const POP: Command = ({ segment, index, hash }) => {
     case "pointer":
       return `${data.memory.pop}\n@${index === "0" ? "THIS" : "THAT"}\nM=D`;
     case "static":
-      return `${data.memory.pop}\n@${`${hash}.${index}`}\nM=D`;
+      return `${data.memory.pop}\n@${`STATIC$${hash}.${index}`}\nM=D`;
     default:
       if (data.memory.symbols.hasOwnProperty(segment))
         return `${getAddress((data.memory.symbols as any)[segment], index)}\n${
