@@ -20,42 +20,43 @@ D=M
 M=D`;
 
 export const LABEL: Command = ({ segment, hash, findLastFunction }) =>
-  `(${hash}$${findLastFunction()}$${segment})`;
+  `(${findLastFunction?.()}$${segment})`;
 
 export const IF: Command = ({ segment, hash, findLastFunction }) => `${
   data.memory.pop
 }
-@${hash}$${findLastFunction()}$${segment}
+@${findLastFunction?.()}$${segment}
 0;JNE`;
 
 export const GOTO: Command = ({ segment, hash, findLastFunction }) =>
-  `@${hash}$${findLastFunction()}$${segment}\n0;JMP`;
+  `@${findLastFunction?.()}$${segment}\n0;JMP`;
 
 export const FUNCTION: Command = ({ segment, index, hash }) =>
-  `@${hash}$${segment}${
+  `@${segment}${
     parseInt(index) > 0 &&
     "\n" +
       Array(parseInt(index)).fill(`${updateAddress(0)}\n${data.memory.push}`)
   }`;
 
 export const CALL: Command = ({ segment, index, hash, currentLine }) =>
-  `${pushVal(`${hash}$${segment}$ret.$${currentLine}`)}
-${Object.values(data.memory.symbols)
-  .map((symbol) => pushVal(symbol))
-  .join("\n")}
-@${5 + parseInt(index)}
+  `${pushVal(`${segment}$ret.$${currentLine}`)} // call ${segment}$ret.$${currentLine}
+${pushVal(data.memory.symbols.local)} // call local
+${pushVal(data.memory.symbols.argument)} // call arg
+${pushVal(data.memory.symbols.this)} // call this
+${pushVal(data.memory.symbols.that)} // call that
+@${5 + parseInt(index)} // @ 5 + ${parseInt(index)}
 D=A
 @SP
 D=M-D
 @ARG
-M=D'
+M=D
 @SP
 D=M
 @LCL
 M=D
 @${segment}
 0;JMP
-(${hash}$${segment}$ret.$${currentLine})
+(${segment}$ret.$${currentLine})
 `;
 
 export const RETURN: Command = () =>

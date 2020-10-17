@@ -14,11 +14,18 @@ D=M`) ||
   ""
 }`;
 
-const getAddress = (address: number | string, offset: string) => `@R13
-${Number.isNaN(address) ? "D=M" : "D=A"}
-@${offset}
-A=M
-M=D`;
+const getAddress = (address: string, offset: string) => {
+
+  console.log("\n"+address);
+  console.log(Number.isNaN(address));
+  console.log(offset);
+
+  return `@R13
+  ${Number.isNaN(parseInt(address)) ? "D=M" : "D=A"}
+  @${offset}
+  A=M
+  M=D`;
+}
 
 const getAddressPointer = () => `@R13
 A=M
@@ -49,7 +56,7 @@ export const PUSH: Command = ({ segment, index, hash }) => {
 export const POP: Command = ({ segment, index, hash }) => {
   switch (segment) {
     case "temp":
-      return `${getAddress(data.memory.constants.temp, index)}\n${
+      return `${getAddress(data.memory.constants.temp.toString(), index)}\n${
         data.memory.pop
       }\n${getAddressPointer()}`;
     case "pointer":

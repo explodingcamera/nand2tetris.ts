@@ -1,9 +1,9 @@
 import crypto from "crypto";
 import data from "./../data/instructions.json";
 
-import * as flow from "./flow"
+import * as flow from "./flow";
 import * as memory from "./memory";
-import * as arithmetic from "./arithmetic"
+import * as arithmetic from "./arithmetic";
 
 // type command = "push" | "pop"; //| "label" | "goto" | "if-goto" | "call" | "return" | "function"
 
@@ -24,11 +24,12 @@ export enum Commands {
   IF = "IF",
   RETURN = "RETURN",
   LABEL = "LABEL",
-  FUNCTION = "FUNCTION" 
+  FUNCTION = "FUNCTION",
 }
 
-export const parseFile = (file: string) =>
-  file
+export const parseFile = (file: string) => {
+  const hash = crypto.createHash("sha256").update(file).digest("hex");
+  const asm = file
     // convert line-endings to dos-style for compatibility
     .replace(/\r?\n/g, "\r\n")
     // remove comments
@@ -44,10 +45,13 @@ export const parseFile = (file: string) =>
         line,
         index,
         lines,
-        hash: crypto.createHash("sha256").update(file).digest("hex")
+        hash,
       })
     )
     .join("\n");
+
+  return asm;
+};
 
 const findLastFunction = (currentIndex: number, lines: string[]) =>
   lines[
@@ -64,12 +68,12 @@ export type Command = ({
   currentLine,
   findLastFunction,
 }: {
-  segment: string,
-  index: string,
-  hash?: string,
-  currentLine: number,
-  findLastFunction: () => string
-}) => string
+  segment: string;
+  index: string;
+  hash?: string;
+  currentLine: number;
+  findLastFunction?: () => string;
+}) => string;
 
 export const parseLine = ({
   line,
@@ -84,8 +88,10 @@ export const parseLine = ({
 }) => {
   const instruction = line.split(" ");
 
-  const command = instruction[0].replace("if-goto", "if").toLocaleUpperCase() as Commands
-  
+  const command = instruction[0]
+    .replace("if-goto", "if")
+    .toLocaleUpperCase() as Commands;
+
   if (!Object.values(Commands).includes(command))
     throw new Error("invalid command: " + instruction[0]);
 
@@ -94,13 +100,17 @@ export const parseLine = ({
     index: instruction[2],
     currentLine: index,
     hash,
-    findLastFunction: () => findLastFunction(index, lines)
+    findLastFunction: () => findLastFunction(index, lines),
   });
 
-  return asm.split("\n").map(a=>a.padEnd(8, " ") + `// line ${index}, instruction: ${line}`).join("\n")
+  return asm
+    .split("\n")
+    .map((a) => a.padEnd(8, " ") + `// line ${index}, instruction: ${line}`)
+    .join("\n");
 };
 
-const bootstrap = `@256
+const bootstrap = ({hash}: {hash:string}) => `@256
 D=A
 @SP
-M=D`;
+M=D
+${flow.CALL({ segment: "Sys.init", index: "0", currentLine: 0, hash })}`;
