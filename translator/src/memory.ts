@@ -2,10 +2,10 @@ import data from "./../data/instructions.json";
 import { Command } from "./translate";
 
 export const updateAddress = (
-  address: number | string,
+  address: string,
   offset?: string
 ) => `@${address}
-${Number.isNaN(address) ? "D=M" : "D=A"}${
+${Number.isNaN(parseInt(address)) ? "D=M" : "D=A"}${
   (offset &&
     `
 @${offset}
@@ -14,18 +14,12 @@ D=M`) ||
   ""
 }`;
 
-const getAddress = (address: string, offset: string) => {
-
-  console.log("\n"+address);
-  console.log(Number.isNaN(address));
-  console.log(offset);
-
-  return `@R13
-  ${Number.isNaN(parseInt(address)) ? "D=M" : "D=A"}
-  @${offset}
-  A=M
-  M=D`;
-}
+const getAddress = (address: string, offset: string) => `@${address}
+${Number.isNaN(parseInt(address)) ? "D=M" : "D=A"}
+@${offset}
+D=D+A
+@R13
+M=D`;
 
 const getAddressPointer = () => `@R13
 A=M
@@ -36,7 +30,7 @@ export const PUSH: Command = ({ segment, index, hash }) => {
     case "constant":
       return `${updateAddress(index)}\n${data.memory.push}`;
     case "temp":
-      return `${updateAddress(data.memory.constants.temp, index)}\n${
+      return `${updateAddress(data.memory.constants.temp.toString(), index)}\n${
         data.memory.push
       }`;
     case "pointer":
@@ -47,7 +41,7 @@ export const PUSH: Command = ({ segment, index, hash }) => {
       return `${updateAddress(`${hash}.${index}`)}\n${data.memory.push}`;
     default:
       if (data.memory.symbols.hasOwnProperty(segment))
-        return `${updateAddress((data.memory.symbols as any)[segment], index)}`;
+        return `${updateAddress((data.memory.symbols as any)[segment], index)}\n${data.memory.push}`;
 
       throw new Error("invalid push segment: " + segment);
   }

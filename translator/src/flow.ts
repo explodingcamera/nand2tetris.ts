@@ -35,7 +35,7 @@ export const FUNCTION: Command = ({ segment, index, hash }) =>
   `@${segment}${
     parseInt(index) > 0 &&
     "\n" +
-      Array(parseInt(index)).fill(`${updateAddress(0)}\n${data.memory.push}`)
+      Array(parseInt(index)).fill(`${updateAddress("0")}\n${data.memory.push}`)
   }`;
 
 export const CALL: Command = ({ segment, index, hash, currentLine }) =>

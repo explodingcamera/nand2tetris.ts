@@ -5,8 +5,6 @@ import * as flow from "./flow";
 import * as memory from "./memory";
 import * as arithmetic from "./arithmetic";
 
-// type command = "push" | "pop"; //| "label" | "goto" | "if-goto" | "call" | "return" | "function"
-
 export enum Commands {
   // memory
   PUSH = "PUSH",
@@ -48,7 +46,7 @@ export const parseFile = (file: string) => {
         hash,
       })
     )
-    .join("\n");
+    .join("\n\n");
 
   return asm;
 };
@@ -103,13 +101,18 @@ export const parseLine = ({
     findLastFunction: () => findLastFunction(index, lines),
   });
 
-  return asm
-    .split("\n")
-    .map((a) => a.padEnd(8, " ") + `// line ${index}, instruction: ${line}`)
-    .join("\n");
+  const generateComments = false;
+
+  if (generateComments)
+    return asm
+      .split("\n")
+      .map((a) => a.padEnd(8, " ") + `// line ${index}, instruction: ${line}`)
+      .join("\n");
+
+  return asm;
 };
 
-const bootstrap = ({hash}: {hash:string}) => `@256
+const bootstrap = ({ hash }: { hash: string }) => `@256
 D=A
 @SP
 M=D

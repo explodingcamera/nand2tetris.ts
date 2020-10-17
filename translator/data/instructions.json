@@ -1,13 +1,12 @@
 {
   "arithmetic": {
-    "pop": "@SP\nM=M-1\nA=M",
     "commands": {
-      "not": "M=!M",
-      "neg": "M=-M",
-      "add": "M=D+M",
-      "sub": "M=M-D",
-      "and": "M=D&M",
-      "or": "M=D|M"
+      "not": "D=!M",
+      "neg": "D=-M",
+      "add": "D=D+M",
+      "sub": "D=M-D",
+      "and": "D=D&M",
+      "or": "D=D|M"
     }
   },
   "flow": {
@@ -20,6 +19,7 @@
   "memory": {
     "push": "@SP\nA=M\nM=D\n@SP\nM=M+1",
     "pop": "@SP\nM=M-1\nA=M\nD=M",
+    "popm": "@SP\nM=M-1\nA=M",
     "symbols": {
       "local": "LCL",
       "this": "THIS",
