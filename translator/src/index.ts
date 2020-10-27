@@ -13,7 +13,7 @@ const main = async () => {
   const arg = process.argv.slice(2)[0];
 
   if (!arg) {
-    console.error(
+    spinner.fail(
       "please provide the file you want to translate as the first argument."
     );
     process.exit(1);
