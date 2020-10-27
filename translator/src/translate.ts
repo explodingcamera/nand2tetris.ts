@@ -1,5 +1,4 @@
 import crypto from "crypto";
-import data from "./../data/instructions.json";
 
 import * as flow from "./flow";
 import * as memory from "./memory";
@@ -43,7 +42,7 @@ export const parseFile = (file: string) => {
     // split into seperate instructions
     .split("\r")
     .map((line, index, lines) =>
-      // we're using hashes as labels to ensure uniqueness across files
+      // we're using hashes as label prefixes to ensure uniqueness across files
       parseLine({
         line,
         index,
@@ -62,7 +61,7 @@ const findLastFunction = (currentIndex: number, lines: string[]) =>
       .slice(0, currentIndex)
       .map((line) => line.startsWith("function"))
       .lastIndexOf(true)
-  ].split(" ")[1];
+  ]?.split(" ")?.[1] || "GLOBAL_LABEL";
 
 export type Command = ({
   segment,

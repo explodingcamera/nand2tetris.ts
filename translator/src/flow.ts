@@ -11,7 +11,7 @@ ${
 }
 ${data.memory.push}`;
 
-const setVar = ({ offset, target }: { offset: string; target: number }) => `@R13
+const setVar = ({ offset, target }: { offset: number; target: string }) => `@R13
 D=M
 @${offset}
 A=D-A
@@ -26,7 +26,7 @@ export const IF: Command = ({ segment, hash, findLastFunction }) => `${
   data.memory.pop
 }
 @${findLastFunction?.()}$${segment}
-0;JNE`;
+D;JNE`;
 
 export const GOTO: Command = ({ segment, hash, findLastFunction }) =>
   `@${findLastFunction?.()}$${segment}\n0;JMP`;
@@ -37,7 +37,7 @@ export const FUNCTION: Command = ({ segment, index, hash }) =>
       ? "\n" +
         Array(parseInt(index)).fill(
           `${updateAddress("0")}\n${data.memory.push}`
-        )
+        ).join("\n")
       : ""
   }`;
 
@@ -68,7 +68,7 @@ export const RETURN: Command = () =>
 D=M
 @R13
 M=D
-${setVar({ offset: "R14", target: 5 })}
+${setVar({ target: "R14", offset: 5 })}
 ${data.memory.pop}
 @ARG
 A=M
@@ -77,9 +77,9 @@ M=D
 D=M+1
 @SP
 M=D
-${Object.values(data.memory.symbols).map((symbol, i) =>
-  setVar({ offset: symbol, target: i + 1 })
-).join("\n")}
+${["THAT", "THIS", "ARG", "LCL"]
+  .map((symbol, i) => setVar({ target: symbol, offset: i + 1 }))
+  .join("\n")}
 @R14
 A=M
 0;JMP`;

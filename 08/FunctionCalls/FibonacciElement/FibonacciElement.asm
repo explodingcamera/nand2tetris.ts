@@ -98,7 +98,7 @@ M=M-1    // line 4, instruction: if-goto IF_TRUE
 A=M      // line 4, instruction: if-goto IF_TRUE
 D=M      // line 4, instruction: if-goto IF_TRUE
 @Main.fibonacci$IF_TRUE // line 4, instruction: if-goto IF_TRUE
-0;JNE    // line 4, instruction: if-goto IF_TRUE
+D;JNE    // line 4, instruction: if-goto IF_TRUE
 
 @Main.fibonacci$IF_FALSE // line 5, instruction: goto IF_FALSE
 0;JMP    // line 5, instruction: goto IF_FALSE
@@ -122,10 +122,10 @@ D=M      // line 8, instruction: return
 M=D      // line 8, instruction: return
 @R13     // line 8, instruction: return
 D=M      // line 8, instruction: return
-@R14     // line 8, instruction: return
+@5       // line 8, instruction: return
 A=D-A    // line 8, instruction: return
 D=M      // line 8, instruction: return
-@5       // line 8, instruction: return
+@R14     // line 8, instruction: return
 M=D      // line 8, instruction: return
 @SP      // line 8, instruction: return
 M=M-1    // line 8, instruction: return
@@ -140,31 +140,31 @@ D=M+1    // line 8, instruction: return
 M=D      // line 8, instruction: return
 @R13     // line 8, instruction: return
 D=M      // line 8, instruction: return
-@LCL     // line 8, instruction: return
-A=D-A    // line 8, instruction: return
-D=M      // line 8, instruction: return
 @1       // line 8, instruction: return
-M=D      // line 8, instruction: return
-@R13     // line 8, instruction: return
-D=M      // line 8, instruction: return
-@THIS    // line 8, instruction: return
 A=D-A    // line 8, instruction: return
-D=M      // line 8, instruction: return
-@2       // line 8, instruction: return
-M=D      // line 8, instruction: return
-@R13     // line 8, instruction: return
 D=M      // line 8, instruction: return
 @THAT    // line 8, instruction: return
-A=D-A    // line 8, instruction: return
-D=M      // line 8, instruction: return
-@3       // line 8, instruction: return
 M=D      // line 8, instruction: return
 @R13     // line 8, instruction: return
 D=M      // line 8, instruction: return
-@ARG     // line 8, instruction: return
+@2       // line 8, instruction: return
 A=D-A    // line 8, instruction: return
 D=M      // line 8, instruction: return
+@THIS    // line 8, instruction: return
+M=D      // line 8, instruction: return
+@R13     // line 8, instruction: return
+D=M      // line 8, instruction: return
+@3       // line 8, instruction: return
+A=D-A    // line 8, instruction: return
+D=M      // line 8, instruction: return
+@ARG     // line 8, instruction: return
+M=D      // line 8, instruction: return
+@R13     // line 8, instruction: return
+D=M      // line 8, instruction: return
 @4       // line 8, instruction: return
+A=D-A    // line 8, instruction: return
+D=M      // line 8, instruction: return
+@LCL     // line 8, instruction: return
 M=D      // line 8, instruction: return
 @R14     // line 8, instruction: return
 A=M      // line 8, instruction: return
@@ -356,10 +356,10 @@ D=M      // line 19, instruction: return
 M=D      // line 19, instruction: return
 @R13     // line 19, instruction: return
 D=M      // line 19, instruction: return
-@R14     // line 19, instruction: return
+@5       // line 19, instruction: return
 A=D-A    // line 19, instruction: return
 D=M      // line 19, instruction: return
-@5       // line 19, instruction: return
+@R14     // line 19, instruction: return
 M=D      // line 19, instruction: return
 @SP      // line 19, instruction: return
 M=M-1    // line 19, instruction: return
@@ -374,31 +374,31 @@ D=M+1    // line 19, instruction: return
 M=D      // line 19, instruction: return
 @R13     // line 19, instruction: return
 D=M      // line 19, instruction: return
-@LCL     // line 19, instruction: return
-A=D-A    // line 19, instruction: return
-D=M      // line 19, instruction: return
 @1       // line 19, instruction: return
-M=D      // line 19, instruction: return
-@R13     // line 19, instruction: return
-D=M      // line 19, instruction: return
-@THIS    // line 19, instruction: return
 A=D-A    // line 19, instruction: return
-D=M      // line 19, instruction: return
-@2       // line 19, instruction: return
-M=D      // line 19, instruction: return
-@R13     // line 19, instruction: return
 D=M      // line 19, instruction: return
 @THAT    // line 19, instruction: return
-A=D-A    // line 19, instruction: return
-D=M      // line 19, instruction: return
-@3       // line 19, instruction: return
 M=D      // line 19, instruction: return
 @R13     // line 19, instruction: return
 D=M      // line 19, instruction: return
-@ARG     // line 19, instruction: return
+@2       // line 19, instruction: return
 A=D-A    // line 19, instruction: return
 D=M      // line 19, instruction: return
+@THIS    // line 19, instruction: return
+M=D      // line 19, instruction: return
+@R13     // line 19, instruction: return
+D=M      // line 19, instruction: return
+@3       // line 19, instruction: return
+A=D-A    // line 19, instruction: return
+D=M      // line 19, instruction: return
+@ARG     // line 19, instruction: return
+M=D      // line 19, instruction: return
+@R13     // line 19, instruction: return
+D=M      // line 19, instruction: return
 @4       // line 19, instruction: return
+A=D-A    // line 19, instruction: return
+D=M      // line 19, instruction: return
+@LCL     // line 19, instruction: return
 M=D      // line 19, instruction: return
 @R14     // line 19, instruction: return
 A=M      // line 19, instruction: return

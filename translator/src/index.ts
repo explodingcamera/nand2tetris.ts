@@ -60,4 +60,7 @@ const processFolder = async (arg: string) => {
   return `${bootstrap()}\n${data.map((data) => parseFile(data)).join("\n")}`;
 };
 
-main().catch((e: Error) => spinner.fail(e.message));
+main().catch((e: Error) => {
+  spinner.fail(e.message)
+  console.trace(e);
+})
