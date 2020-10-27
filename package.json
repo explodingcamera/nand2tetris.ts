@@ -3,15 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "assembler": "yarn run --silent ts-node assembler",
-    "translator": "yarn run --silent ts-node translator",
-    "compiler": "yarn run --silent ts-node compiler"
+    "assembler": "yarn run --silent ts-node packages/assembler",
+    "translator": "yarn run --silent ts-node packages/translator",
+    "compiler": "yarn run --silent ts-node packages/compiler"
   },
   "workspaces": {
     "packages": [
-      "assembler",
-      "translator",
-      "compiler"
+      "packages/*"
     ]
   },
   "dependencies": {

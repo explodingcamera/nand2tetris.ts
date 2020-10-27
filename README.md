@@ -20,6 +20,16 @@ The HackVM Translator is used to convert code written in the Hack VM Language to
 
 The HackVM Translator is used to convert code written in the Jack Language to the HackVM Language.
 
+## Repository Structure
+
+<big><pre>
+**NAND2TETRIS**
+├── [packages](./packages/)
+│ ├── [assembler](./packages/client/)
+│ ├── [compiler](./packages/compiler/)
+│ └── [translator](./packages/translator/)
+└── [weeks](./weeks/) _# course files_</big></pre>
+
 ## Usage
 
 To use these different programs:
