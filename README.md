@@ -45,6 +45,6 @@ To use these different programs:
 
    - `$ yarn assembler ./../someAssemblyCode.asm`
    - `$ yarn translator ./../SomeVMCode.vm`
-   - `$ yarn translator ./../AFolderWithVMCode`
+   - `$ yarn compiler ./../AFolderWithVMCode`
 
    The results will be stored in the folder/next to the file you specified.

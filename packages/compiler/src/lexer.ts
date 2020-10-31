@@ -1,7 +1,8 @@
 import { createToken, Lexer } from "chevrotain";
 import { keywords, symbols } from "./../data/tokens.json";
+import { capitalize } from "./utils";
 
-const Identifier = createToken({
+export const Identifier = createToken({
   name: "Identifier",
   pattern: /[a-zA-Z]\w*/,
 });
@@ -9,7 +10,7 @@ const Identifier = createToken({
 // Numbers with digits from 0-9 that can be negative,
 // optionally can have an exponent (e or E)
 // that can be positive or negative
-const NumberLiteral = createToken({
+export const NumberLiteral = createToken({
   name: "Number",
   pattern: /-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?/,
 });
@@ -17,22 +18,44 @@ const NumberLiteral = createToken({
 // Strings that start and end with "
 // can span multiple lines and have
 // escaped characters by prefixing them with \
-const StringLiteral = createToken({
+export const StringLiteral = createToken({
   name: "StringLiteral",
   pattern: /"(?:[^\\"]|\\(?:[bfnrtv"\\/]|u[0-9a-fA-F]{4}))*"/,
 });
 
-const WhiteSpace = createToken({
+export const WhiteSpace = createToken({
   name: "WhiteSpace",
   pattern: /\s+/,
   group: Lexer.SKIPPED,
 });
 
-const Comment = createToken({
+export const Comment = createToken({
   name: "Comment",
   pattern: /\/\/.+/,
   group: "comments",
 });
+
+export const Keywords = Object.fromEntries(
+  keywords.map((keyword) => [
+    capitalize(keyword),
+    createToken({
+      name: keyword,
+      pattern: new RegExp(keyword),
+      longer_alt: Identifier,
+    }),
+  ])
+);
+
+export const Symbols = Object.fromEntries(
+  Object.entries(symbols).map(([symbol, name]) => [
+    capitalize(name),
+    createToken({
+      name,
+      pattern: new RegExp(`\\${symbol}`),
+      longer_alt: Identifier,
+    }),
+  ])
+);
 
 export const tokens = [
   WhiteSpace,
@@ -42,24 +65,12 @@ export const tokens = [
   StringLiteral,
 
   // "keywords" appear before the Identifier
-  ...keywords.map((keyword) =>
-    createToken({
-      name: keyword,
-      pattern: new RegExp(keyword),
-      longer_alt: Identifier,
-    })
-  ),
+  ...Object.values(Keywords),
 
   // The Identifier must appear after the keywords because all keywords are valid identifiers.
   Identifier,
 
-  ...Object.entries(symbols).map(([symbol, name]) =>
-    createToken({
-      name,
-      pattern: new RegExp(`\\${symbol}`),
-      longer_alt: Identifier,
-    })
-  ),
+  ...Object.values(Symbols),
 ];
 
 export default new Lexer(tokens);
