@@ -5,7 +5,11 @@
   "dependencies": {
     "@tsconfig/node12": "^1.0.7",
     "@types/node": "^14.14.5",
+    "@types/ramda": "^0.27.30",
+    "chevrotain": "^7.0.3",
     "ora": "^5.1.0",
+    "ramda": "^0.27.1",
+    "snapdragon": "^0.12.0",
     "ts-node": "^9.0.0"
   }
 }
