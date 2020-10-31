@@ -18,7 +18,7 @@ The HackVM Translator is used to convert code written in the Hack VM Language to
 
 ### The Jack Compiler
 
-The HackVM Translator is used to convert code written in the Jack Language to the HackVM Language.
+The Jack Compiler is used to convert code written in the Jack Language to the HackVM Language.
 
 ## Repository Structure
 
