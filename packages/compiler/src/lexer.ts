@@ -39,7 +39,7 @@ export const Keywords = Object.fromEntries(
   keywords.map((keyword) => [
     capitalize(keyword),
     createToken({
-      name: keyword,
+      name: capitalize(keyword),
       pattern: new RegExp(keyword),
       longer_alt: Identifier,
     }),
